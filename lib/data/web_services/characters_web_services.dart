@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/strings.dart';
 
 class CharactersWebServices {
   Future<List<dynamic>> getAllCharacters() async {
@@ -26,4 +24,5 @@ class CharactersWebServices {
   //     return [];
   //   }
   // }
+
 }
