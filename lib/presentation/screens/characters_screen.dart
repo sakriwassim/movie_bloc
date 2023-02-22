@@ -21,6 +21,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   List<Character> allCharacters = [];
   List<Character> searchedForCharacters = [];
   bool _isSearching = false;
+  bool isDescending = false;
   final _searchTextController = TextEditingController();
 
   @override
@@ -29,29 +30,33 @@ class _CharactersScreenState extends State<CharactersScreen> {
     super.initState();
   }
 
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchTextController,
-      cursorColor: MyColors.myGrey,
-      decoration: InputDecoration(
-          hintText: "Find a movie",
-          border: InputBorder.none,
-          hintStyle: TextStyle(color: MyColors.myGrey, fontSize: 18)),
-      style: TextStyle(color: MyColors.myGrey, fontSize: 18),
-      onChanged: (searchedCharacter) {
-        addSearchedFOrItemsToSearchedList(searchedCharacter);
-      },
-    );
+  allCharactersorder() {
+    allCharacters.sort((a, b) => a.metascore!.compareTo(b.metascore!));
   }
 
-  void addSearchedFOrItemsToSearchedList(searchedCharacter) {
-    searchedForCharacters = allCharacters
-        .where((character) =>
-            character.title!.toLowerCase().startsWith(searchedCharacter))
-        .toList();
+  // Widget _buildSearchField() {
+  //   return TextField(
+  //     controller: _searchTextController,
+  //     cursorColor: MyColors.myGrey,
+  //     decoration: InputDecoration(
+  //         hintText: "Find a movie",
+  //         border: InputBorder.none,
+  //         hintStyle: TextStyle(color: MyColors.myGrey, fontSize: 18)),
+  //     style: TextStyle(color: MyColors.myGrey, fontSize: 18),
+  //     onChanged: (searchedCharacter) {
+  //       addSearchedFOrItemsToSearchedList(searchedCharacter);
+  //     },
+  //   );
+  // }
 
-    setState(() {});
-  }
+  // void addSearchedFOrItemsToSearchedList(searchedCharacter) {
+  //   searchedForCharacters = allCharacters
+  //       .where((character) =>
+  //           character.title!.toLowerCase().startsWith(searchedCharacter))
+  //       .toList();
+
+  //   setState(() {});
+  // }
 
   void _clearSearch() {
     setState(() {
@@ -105,7 +110,22 @@ class _CharactersScreenState extends State<CharactersScreen> {
       builder: (context, state) {
         if (state is CharactersLoaded) {
           allCharacters = (state).characters;
-          return buildLoadedListWidgets();
+          return Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    isDescending = !isDescending;
+                  });
+                },
+                child: Text(
+                  isDescending ? "Descending" : "Ascending",
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+              Expanded(child: buildLoadedListWidgets()),
+            ],
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -121,6 +141,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   }
 
   Widget buildCharactersList() {
+    allCharacters.sort((a, b) => a.metascore!.compareTo(b.metascore!));
     return GridView.builder(
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -137,9 +158,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
               decoration: BoxDecoration(
                   color: Colors.amber, borderRadius: BorderRadius.circular(15)),
               child: CharacterItem(
-                  character: _searchTextController.text.isEmpty
-                      ? allCharacters[index]
-                      : searchedForCharacters[index]));
+                character: allCharacters[index],
+              ));
         });
   }
 
@@ -191,7 +211,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
       backgroundColor: MyColors.myGrey,
       appBar: AppBar(
         backgroundColor: MyColors.myYellow,
-        title: _isSearching ? _buildSearchField() : _buildAppBarTitle(),
+        title: _buildAppBarTitle(),
         actions: _buildAppBarActions(),
         leading: _isSearching
             ? const BackButton(

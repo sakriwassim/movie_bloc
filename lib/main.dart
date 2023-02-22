@@ -22,3 +22,12 @@ class BreakingBadApp extends StatelessWidget {
     );
   }
 }
+
+/*
+
+ FutureBuilder(
+                future: MovieAPI.index(),
+                builder: (context, snapshot) {
+                  return SelectableText(snapshot.data ?? '');
+                }),
+ */
