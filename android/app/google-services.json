@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "834455444185",
+    "project_id": "deutschland-b8e69",
+    "storage_bucket": "deutschland-b8e69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834455444185:android:3f44fb139cce9068fc3cc8",
+        "android_client_info": {
+          "package_name": "com.passconsulting.movie_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834455444185-p5im0r2u367ent98jii206853rqhlr3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATPNA-nAdlzq0gP7cvcT893Guh2IIwcdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834455444185-p5im0r2u367ent98jii206853rqhlr3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

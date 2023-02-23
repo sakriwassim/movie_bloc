@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/presentation/screens/characters_screen.dart';
 
+import 'authentification/pages/entry_view.dart';
 import 'business_logic/cubit/characters_cubit.dart';
 import 'constants/strings.dart';
 import 'data/models/characters.dart';
@@ -20,10 +21,12 @@ class AppRouter {
 
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case "/":
+        return MaterialPageRoute(builder: (_) => SplashScreen());
       case charactersScreens:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => charactersCubit,
+            create: (context) => charactersCubit, 
             child: const CharactersScreen(),
           ),
         );

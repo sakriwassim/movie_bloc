@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
+import '../../authentification/controllers/auth_controller.dart';
 import '../../business_logic/cubit/characters_cubit.dart';
 import '../../constants/my_colors.dart';
 import '../../data/models/characters.dart';
@@ -93,6 +94,14 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return Scaffold(
       backgroundColor: MyColors.myGrey,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Auth().signOut();
+            },
+            icon: Icon(color: Colors.white, Icons.logout),
+          )
+        ],
         backgroundColor: MyColors.myYellow,
         title: _buildAppBarTitle(),
       ),
