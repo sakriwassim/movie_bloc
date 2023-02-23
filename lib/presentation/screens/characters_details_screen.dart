@@ -7,7 +7,7 @@ import '../../constants/my_colors.dart';
 import '../../data/models/characters.dart';
 
 class CharactersDetailsScreen extends StatelessWidget {
-  final Character character;
+  final Character? character;
 
   const CharactersDetailsScreen({Key? key, required this.character})
       : super(key: key);
@@ -21,13 +21,13 @@ class CharactersDetailsScreen extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
-          character.title!,
+          character?.title ?? "",
           style: TextStyle(color: MyColors.myWhite),
         ),
         background: Hero(
-          tag: character.imdbID!,
+          tag: character?.imdbID ?? "",
           child: Image.network(
-            character.poster!,
+            character?.poster ?? "",
             fit: BoxFit.cover,
           ),
         ),
@@ -122,15 +122,15 @@ class CharactersDetailsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      characterInfo('Title : ', character.title!),
+                      characterInfo('Title : ', character?.title ?? ""),
                       buildDivider(310),
-                      characterInfo('Year : ', character.year!),
+                      characterInfo('Year : ', character?.year ?? ""),
                       buildDivider(260),
-                      characterInfo('Actors : ', character.actors!),
+                      characterInfo('Actors : ', character?.actors ?? ""),
                       buildDivider(260),
-                      characterInfo('Director : ', character.director!),
+                      characterInfo('Director : ', character?.director ?? ""),
                       buildDivider(260),
-                      characterInfo('Writer : ', character.writer!),
+                      characterInfo('Writer : ', character?.writer ?? ""),
                       SizedBox(
                         height: 50,
                       ),

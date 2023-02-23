@@ -9,6 +9,7 @@ import '../../business_logic/cubit/characters_cubit.dart';
 import '../../constants/my_colors.dart';
 import '../../data/models/characters.dart';
 import '../widgets/character_item.dart';
+import '../widgets/characters_list_widget.dart';
 
 class CharactersScreen extends StatefulWidget {
   const CharactersScreen({super.key});
@@ -30,137 +31,19 @@ class _CharactersScreenState extends State<CharactersScreen> {
     super.initState();
   }
 
-  allCharactersorder() {
-    allCharacters.sort((a, b) => a.metascore!.compareTo(b.metascore!));
-  }
-
-  // Widget _buildSearchField() {
-  //   return TextField(
-  //     controller: _searchTextController,
-  //     cursorColor: MyColors.myGrey,
-  //     decoration: InputDecoration(
-  //         hintText: "Find a movie",
-  //         border: InputBorder.none,
-  //         hintStyle: TextStyle(color: MyColors.myGrey, fontSize: 18)),
-  //     style: TextStyle(color: MyColors.myGrey, fontSize: 18),
-  //     onChanged: (searchedCharacter) {
-  //       addSearchedFOrItemsToSearchedList(searchedCharacter);
-  //     },
-  //   );
-  // }
-
-  // void addSearchedFOrItemsToSearchedList(searchedCharacter) {
-  //   searchedForCharacters = allCharacters
-  //       .where((character) =>
-  //           character.title!.toLowerCase().startsWith(searchedCharacter))
-  //       .toList();
-
-  //   setState(() {});
-  // }
-
-  void _clearSearch() {
-    setState(() {
-      _searchTextController.clear();
-    });
-  }
-
-  List<Widget> _buildAppBarActions() {
-    if (_isSearching) {
-      return [
-        IconButton(
-          onPressed: () {
-            _clearSearch();
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.clear, color: MyColors.myGrey),
-        ),
-      ];
-    } else {
-      return [
-        IconButton(
-          onPressed: _startSearch,
-          icon: Icon(
-            Icons.search,
-            color: MyColors.myGrey,
-          ),
-        ),
-      ];
-    }
-  }
-
-  void _startSearch() {
-    ModalRoute.of(context)!
-        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
-
-    setState(() {
-      _isSearching = true;
-    });
-  }
-
-  void _stopSearching() {
-    _clearSearch();
-
-    setState(() {
-      _isSearching = false;
-    });
-  }
-
   Widget buildBlockWidget() {
     return BlocBuilder<CharactersCubit, CharactersState>(
       builder: (context, state) {
         if (state is CharactersLoaded) {
           allCharacters = (state).characters;
-          return Column(
-            children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    isDescending = !isDescending;
-                  });
-                },
-                child: Text(
-                  isDescending ? "Descending" : "Ascending",
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
-              Expanded(child: buildLoadedListWidgets()),
-            ],
+          return CharactersListwidget(
+            allCharacters: allCharacters,
           );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
       },
     );
-  }
-
-  Widget buildLoadedListWidgets() {
-    return Container(
-      color: MyColors.myGrey,
-      child: buildCharactersList(),
-    );
-  }
-
-  Widget buildCharactersList() {
-    allCharacters.sort((a, b) => a.metascore!.compareTo(b.metascore!));
-    return GridView.builder(
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            childAspectRatio: 1 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemCount: _searchTextController.text.isEmpty
-            ? allCharacters.length
-            : searchedForCharacters.length,
-        itemBuilder: (BuildContext ctx, index) {
-          return Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(15)),
-              child: CharacterItem(
-                character: allCharacters[index],
-              ));
-        });
   }
 
   Widget showLoadingIndicator() {
@@ -212,12 +95,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
       appBar: AppBar(
         backgroundColor: MyColors.myYellow,
         title: _buildAppBarTitle(),
-        actions: _buildAppBarActions(),
-        leading: _isSearching
-            ? const BackButton(
-                color: MyColors.myGrey,
-              )
-            : Container(),
       ),
       body: OfflineBuilder(
           connectivityBuilder: (BuildContext context,
