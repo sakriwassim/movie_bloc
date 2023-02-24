@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movie_app/authentification/pages/widgets/headWidget.dart';
 
 import '../../constants/my_colors.dart';
 import '../../constants/small_button_style.dart';
@@ -20,18 +19,19 @@ class _AuthPageState extends State<AuthPage> {
   bool _confirmPasswordVisible = false;
   final _formKey = GlobalKey<FormState>();
   String? errorMessage = '';
-  bool isAdmin = false;
-  String email = '';
-  String username = '';
-  String password = '';
 
   bool isLogin = true;
+
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerPasswordConfirm =
+      TextEditingController();
 
   Future<void> signIn() async {
     try {
       await Auth().signIn(
-        email: email.toString().trim(),
-        password: password.toString().trim(),
+        email: _controllerEmail.text.trim(),
+        password: _controllerPassword.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -43,10 +43,9 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> signUp() async {
     try {
       await Auth().signUp(
-          email: email.toString().trim(),
-          password: password.toString().trim(),
-          name: username.toString().trim(),
-          isAdmin: isAdmin);
+        email: _controllerEmail.text.trim(),
+        password: _controllerPassword.text.trim(),
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -54,19 +53,83 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
+  Widget _entryFieldPassword(String text, TextEditingController controller,
+      Function function, bool passwordVisible) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            width: 3,
+            color: Colors.greenAccent,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide:
+              const BorderSide(width: 3, color: Color.fromARGB(31, 0, 0, 0)),
+        ),
+        labelText: text,
+        suffixIcon: IconButton(
+          icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+          onPressed: () {
+            function;
+          },
+        ),
+      ),
+      textInputAction: isLogin ? TextInputAction.done : TextInputAction.next,
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: !passwordVisible,
+      validator: (value) {
+        if (value == null || value.isEmpty || value.length < 6) {
+          return "Password should be at least 6 characters";
+        }
+      },
+    );
+  }
+
+  Widget _entryFieldEmail(
+    TextEditingController controller,
+  ) {
+    return TextFormField(
+      controller: controller,
+      decoration: decoration("Email"),
+      textInputAction: TextInputAction.next,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+        if (value == null || value.isEmpty || !emailRegExp.hasMatch(value)) {
+          return "Enter a valid email address";
+        }
+      },
+    );
+  }
+
   Widget _errorMessage() {
-    return errorMessage == ''
-        ? const SizedBox(height: 8)
-        : Column(
-            children: [
-              Text(
-                errorMessage == '' ? '' : '$errorMessage',
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.red),
-              ),
-              const SizedBox(height: 8),
-            ],
-          );
+    return Text(
+      errorMessage == "" ? "" : "Humm? $errorMessage",
+      style: TextStyle(color: Colors.red),
+    );
+  }
+
+  Widget _submitButton() {
+    return InkWell(
+      onTap: () {
+        final form = _formKey.currentState;
+        if (form!.validate()) {
+          isLogin ? signIn() : signUp();
+        }
+      },
+      child: Button(
+        gradientbackground: gradientbackground,
+        fontSize: 25,
+        fontWeight: FontWeight.w400,
+        height: 50,
+        text: 'Next',
+        textcolor: Colors.white,
+      ),
+    );
   }
 
   @override
@@ -107,69 +170,30 @@ class _AuthPageState extends State<AuthPage> {
                           key: _formKey,
                           child: Column(
                             children: [
-                              !isLogin
-                                  ? Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: const [
-                                            Text("Username"),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        TextFormField(
-                                          textInputAction: TextInputAction.next,
-                                          decoration: decoration("Username"),
-                                          onChanged: (val) => setState(() {
-                                            username = val;
-                                          }),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "Username shouldn't be empty";
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  : const SizedBox(),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: const [
+                                  Text("Email"),
+                                ],
+                              ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: const [
-                                      Text("Email"),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  TextFormField(
-                                    decoration: decoration("Email"),
-                                    textInputAction: TextInputAction.next,
-                                    keyboardType: TextInputType.emailAddress,
-                                    onChanged: (val) => setState(() {
-                                      email = val;
-                                    }),
-                                    validator: (value) {
-                                      final emailRegExp = RegExp(
-                                          r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                                      if (value == null ||
-                                          value.isEmpty ||
-                                          !emailRegExp.hasMatch(value)) {
-                                        return "Enter a valid email address";
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ],
+                              TextFormField(
+                                controller: _controllerEmail,
+                                decoration: decoration("Email"),
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  final emailRegExp = RegExp(
+                                      r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      !emailRegExp.hasMatch(value)) {
+                                    return "Enter a valid email address";
+                                  }
+                                  return null;
+                                },
                               ),
                               const SizedBox(
                                 height: 10,
@@ -186,6 +210,7 @@ class _AuthPageState extends State<AuthPage> {
                                     height: 10,
                                   ),
                                   TextFormField(
+                                    controller: _controllerPassword,
                                     decoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius:
@@ -220,9 +245,6 @@ class _AuthPageState extends State<AuthPage> {
                                         : TextInputAction.next,
                                     keyboardType: TextInputType.visiblePassword,
                                     obscureText: !_passwordVisible,
-                                    onChanged: (val) => setState(() {
-                                      password = val;
-                                    }),
                                     validator: (value) {
                                       if (value == null ||
                                           value.isEmpty ||
@@ -251,9 +273,6 @@ class _AuthPageState extends State<AuthPage> {
                                           height: 10,
                                         ),
                                         TextFormField(
-                                          textInputAction: isAdmin
-                                              ? TextInputAction.next
-                                              : TextInputAction.done,
                                           keyboardType:
                                               TextInputType.visiblePassword,
                                           obscureText: !_confirmPasswordVisible,
@@ -291,10 +310,10 @@ class _AuthPageState extends State<AuthPage> {
                                             if (value == null ||
                                                 value.isEmpty ||
                                                 value.length < 6 ||
-                                                value != password) {
+                                                value !=
+                                                    _controllerPassword.text) {
                                               return "Password doesn't match";
                                             }
-                                            return null;
                                           },
                                         ),
                                       ],

@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/user_model.dart';
-
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? get currentUser => _firebaseAuth.currentUser;
@@ -20,20 +18,11 @@ class Auth {
   Future<void> signUp({
     required String email,
     required String password,
-    required String name,
-    required bool isAdmin,
   }) async {
-    final User? user = (await _firebaseAuth.createUserWithEmailAndPassword(
+    await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
-    ))
-        .user;
-    // if (user != null) {
-    //   await Firestore.addUserWithId(
-    //     user.uid,
-    //     UserModel(name: name, isAdmin: isAdmin),
-    //   );
-    // }
+    );
   }
 
   Future<void> signOut() async {

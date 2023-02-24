@@ -5,7 +5,7 @@ import 'app_router.dart';
 
 //Email : sakriwassim@gmail.com
 //linkdin : sakri wassim
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(BreakingBadApp(
