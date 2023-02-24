@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../business_logic/cubit/characters_cubit.dart';
+import '../../business_logic/cubit/movies_cubit.dart';
 import '../../constants/my_colors.dart';
-import '../../data/models/characters.dart';
+import '../../data/models/movies.dart';
 
-class CharactersDetailsScreen extends StatelessWidget {
-  final Character? character;
+class MoviesDetailsScreen extends StatelessWidget {
+  final Movie? movie;
 
-  const CharactersDetailsScreen({Key? key, required this.character})
+  const MoviesDetailsScreen({Key? key, required this.movie})
       : super(key: key);
 
   Widget buildSliverAppBar() {
@@ -21,13 +21,13 @@ class CharactersDetailsScreen extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
-          character?.title ?? "",
+          movie?.title ?? "",
           style: TextStyle(color: MyColors.myWhite),
         ),
         background: Hero(
-          tag: character?.imdbID ?? "",
+          tag: movie?.imdbID ?? "",
           child: Image.network(
-            character?.poster ?? "",
+            movie?.poster ?? "",
             fit: BoxFit.cover,
           ),
         ),
@@ -35,7 +35,7 @@ class CharactersDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget characterInfo(String title, String value) {
+  Widget movieInfo(String title, String value) {
     return RichText(
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -106,7 +106,7 @@ class CharactersDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //BlocProvider.of<CharactersCubit>(context).getQuotes(character.name);
+    
     return Scaffold(
       backgroundColor: MyColors.myGrey,
       body: CustomScrollView(
@@ -122,15 +122,15 @@ class CharactersDetailsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      characterInfo('Title : ', character?.title ?? ""),
+                      movieInfo('Title : ', movie?.title ?? ""),
                       buildDivider(310),
-                      characterInfo('Year : ', character?.year ?? ""),
+                      movieInfo('Year : ', movie?.year ?? ""),
                       buildDivider(260),
-                      characterInfo('Actors : ', character?.actors ?? ""),
+                      movieInfo('Actors : ', movie?.actors ?? ""),
                       buildDivider(260),
-                      characterInfo('Director : ', character?.director ?? ""),
+                      movieInfo('Director : ', movie?.director ?? ""),
                       buildDivider(260),
-                      characterInfo('Writer : ', character?.writer ?? ""),
+                      movieInfo('Writer : ', movie?.writer ?? ""),
                       SizedBox(
                         height: 50,
                       ),

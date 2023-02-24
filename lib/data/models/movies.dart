@@ -1,4 +1,4 @@
-  class Character {
+  class Movie {
     String? title;
     String? year;
     String? rated;
@@ -24,7 +24,7 @@
     String? website;
     String? response;
 
-    Character(
+    Movie(
         {required this.title,
         required this.year,
         required this.rated,
@@ -50,7 +50,7 @@
         required this.website,
         required this.response});
 
-    Character.fromJson(Map<String, dynamic> json) {
+    Movie.fromJson(Map<String, dynamic> json) {
       title = json['Title'];
       year = json['Year'];
       rated = json['Rated'];

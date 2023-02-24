@@ -1,2 +1,2 @@
-const charactersScreens = "/";
-const characterDetailScreens = "/character_details";
+const movieScreens = "/";
+const movieDetailScreens = "/movie_details";

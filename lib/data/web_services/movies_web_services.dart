@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 
 import '../../constants/strings.dart';
 
-class CharactersWebServices {
-  Future<List<dynamic>> getAllCharacters() async {
+class MoviesWebServices {
+  Future<List<dynamic>> getAllMovies() async {
     try {
       final String response = await rootBundle.loadString('assets/movie.json');
       final data = await json.decode(response);

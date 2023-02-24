@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../constants/my_colors.dart';
 import '../../constants/strings.dart';
-import '../../data/models/characters.dart';
+import '../../data/models/movies.dart';
 
-class CharacterItem extends StatelessWidget {
-  final Character character;
-  const CharacterItem({Key? key, required this.character}) : super(key: key);
+class MovieItem extends StatelessWidget {
+  final Movie movie;
+  const MovieItem({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,27 +18,27 @@ class CharacterItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, characterDetailScreens,
-            arguments: character),
+        onTap: () => Navigator.pushNamed(context, movieDetailScreens,
+            arguments: movie),
         child: GridTile(
           // ignore: sort_child_properties_last
-          child: character.poster!.isNotEmpty
+          child: movie.poster!.isNotEmpty
               ? FadeInImage.assetNetwork(
                   placeholder: "assets/images/loading.gif",
-                  image: '${character.poster}',
+                  image: '${movie.poster}',
                   fit: BoxFit.cover,
                 )
               : CircularProgressIndicator(),
 
           footer: Hero(
-            tag: character.imdbID!,
+            tag: movie.imdbID!,
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               color: Colors.black54,
               alignment: Alignment.bottomCenter,
               child: Text(
-                '${character.title}',
+                '${movie.title}',
                 style: TextStyle(
                   height: 1.3,
                   fontSize: 16,

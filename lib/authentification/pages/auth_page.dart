@@ -83,7 +83,7 @@ class _AuthPageState extends State<AuthPage> {
       obscureText: !passwordVisible,
       validator: (value) {
         if (value == null || value.isEmpty || value.length < 6) {
-          return "Password should be at least 6 characters";
+          return "Password should be at least 6 movies";
         }
       },
     );
@@ -249,7 +249,7 @@ class _AuthPageState extends State<AuthPage> {
                                       if (value == null ||
                                           value.isEmpty ||
                                           value.length < 6) {
-                                        return "Password should be at least 6 characters";
+                                        return "Password should be at least 6 movie";
                                       }
                                       return null;
                                     },

@@ -1,44 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
 import '../../authentification/controllers/auth_controller.dart';
-import '../../business_logic/cubit/characters_cubit.dart';
+import '../../business_logic/cubit/movies_cubit.dart';
 import '../../constants/my_colors.dart';
-import '../../data/models/characters.dart';
-import '../widgets/character_item.dart';
-import '../widgets/characters_list_widget.dart';
+import '../../data/models/movies.dart';
+import '../widgets/movies_list_widget.dart';
 
-class CharactersScreen extends StatefulWidget {
-  const CharactersScreen({super.key});
+class MoviesScreen extends StatefulWidget {
+  const MoviesScreen({super.key});
 
   @override
-  State<CharactersScreen> createState() => _CharactersScreenState();
+  State<MoviesScreen> createState() => _MoviesScreenState();
 }
 
-class _CharactersScreenState extends State<CharactersScreen> {
-  List<Character> allCharacters = [];
-  List<Character> searchedForCharacters = [];
+class _MoviesScreenState extends State<MoviesScreen> {
+  List<Movie> allMovies = [];
   bool _isSearching = false;
   bool isDescending = false;
-  final _searchTextController = TextEditingController();
-
+  
   @override
   void initState() {
-    BlocProvider.of<CharactersCubit>(context).GetAllCharacters();
+    BlocProvider.of<MoviesCubit>(context).GetAllMovies();
     super.initState();
   }
 
   Widget buildBlockWidget() {
-    return BlocBuilder<CharactersCubit, CharactersState>(
+    return BlocBuilder<MoviesCubit, MoviesState>(
       builder: (context, state) {
-        if (state is CharactersLoaded) {
-          allCharacters = (state).characters;
-          return CharactersListwidget(
-            allCharacters: allCharacters,
+        if (state is MoviesLoaded) {
+          allMovies = (state).movies;
+          return MoviesListwidget(
+            allMovies: allMovies,
           );
         } else {
           return const Center(child: CircularProgressIndicator());

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../business_logic/cubit/characters_cubit.dart';
-import '../../data/repository/characters_repository.dart';
-import '../../data/web_services/characters_web_services.dart';
-import '../../presentation/screens/characters_screen.dart';
+import '../../business_logic/cubit/movies_cubit.dart';
+import '../../data/repository/movies_repository.dart';
+import '../../data/web_services/movies_web_services.dart';
+import '../../presentation/screens/movies_screen.dart';
 import '../controllers/auth_controller.dart';
 import 'auth_page.dart';
 
@@ -15,9 +15,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-late CharactersRepository charactersRepository =
-    CharactersRepository(CharactersWebServices());
-late CharactersCubit charactersCubit = CharactersCubit(charactersRepository);
+late MoviesRepository moviesRepository = MoviesRepository(MoviesWebServices());
+late MoviesCubit moviesCubit = MoviesCubit(moviesRepository);
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -27,9 +26,9 @@ class _HomePageState extends State<HomePage> {
         stream: Auth().authStateChange,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return BlocProvider<CharactersCubit>(
-              create: (context) => charactersCubit,
-              child: const CharactersScreen(),
+            return BlocProvider<MoviesCubit>(
+              create: (context) => moviesCubit,
+              child: const MoviesScreen(),
             );
           } else {
             return const AuthPage();
