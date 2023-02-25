@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
 import '../../constants/my_colors.dart';
 import '../../constants/small_button_style.dart';
-import '../../constants/text_widget_text1.dart';
 import '../controllers/auth_controller.dart';
 
 class AuthPage extends StatefulWidget {

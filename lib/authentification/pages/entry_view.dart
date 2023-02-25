@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/constants/my_colors.dart';
 
 import 'home_page.dart';

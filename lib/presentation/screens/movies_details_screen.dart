@@ -26,6 +26,7 @@ class MoviesDetailsScreen extends StatelessWidget {
         background: Hero(
           tag: movie?.imdbID ?? "",
           child: CachedNetworkImage(
+            fit: BoxFit.cover,
             imageUrl: "${movie?.poster}",
             placeholder: (context, url) =>
                 Center(child: new CircularProgressIndicator()),

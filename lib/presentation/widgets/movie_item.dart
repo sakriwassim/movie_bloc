@@ -23,6 +23,7 @@ class MovieItem extends StatelessWidget {
             Navigator.pushNamed(context, movieDetailScreens, arguments: movie),
         child: GridTile(
           child: CachedNetworkImage(
+            fit: BoxFit.cover,
             imageUrl: "${movie.poster}",
             placeholder: (context, url) =>
                 Center(child: new CircularProgressIndicator()),
