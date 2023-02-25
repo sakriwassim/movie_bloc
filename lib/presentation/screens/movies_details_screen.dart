@@ -1,16 +1,15 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../business_logic/cubit/movies_cubit.dart';
+
 import '../../constants/my_colors.dart';
 import '../../data/models/movies.dart';
 
 class MoviesDetailsScreen extends StatelessWidget {
   final Movie? movie;
 
-  const MoviesDetailsScreen({Key? key, required this.movie})
-      : super(key: key);
+  const MoviesDetailsScreen({Key? key, required this.movie}) : super(key: key);
 
   Widget buildSliverAppBar() {
     return SliverAppBar(
@@ -26,9 +25,11 @@ class MoviesDetailsScreen extends StatelessWidget {
         ),
         background: Hero(
           tag: movie?.imdbID ?? "",
-          child: Image.network(
-            movie?.poster ?? "",
-            fit: BoxFit.cover,
+          child: CachedNetworkImage(
+            imageUrl: "${movie?.poster}",
+            placeholder: (context, url) =>
+                Center(child: new CircularProgressIndicator()),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
           ),
         ),
       ),
@@ -106,7 +107,6 @@ class MoviesDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: MyColors.myGrey,
       body: CustomScrollView(

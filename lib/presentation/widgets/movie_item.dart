@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../constants/my_colors.dart';
 import '../../constants/strings.dart';
@@ -18,18 +19,15 @@ class MovieItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, movieDetailScreens,
-            arguments: movie),
+        onTap: () =>
+            Navigator.pushNamed(context, movieDetailScreens, arguments: movie),
         child: GridTile(
-          // ignore: sort_child_properties_last
-          child: movie.poster!.isNotEmpty
-              ? FadeInImage.assetNetwork(
-                  placeholder: "assets/images/loading.gif",
-                  image: '${movie.poster}',
-                  fit: BoxFit.cover,
-                )
-              : CircularProgressIndicator(),
-
+          child: CachedNetworkImage(
+            imageUrl: "${movie.poster}",
+            placeholder: (context, url) =>
+                Center(child: new CircularProgressIndicator()),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
+          ),
           footer: Hero(
             tag: movie.imdbID!,
             child: Container(
