@@ -97,4 +97,10 @@ This project has a class MovieAPI, that will provide all data needed.
   }
   ```
 
+![WhatsApp Image 2023-02-26 at 17 08 28 (2)](https://user-images.githubusercontent.com/62904371/221422804-f8de122c-2b0b-4e40-a767-a532ea4140b1.jpeg)
+![Screenshot_1677321141](https://user-images.githubusercontent.com/62904371/221422806-5e17d7b4-53fe-4fea-8909-33bd48d8a2ae.png)
+![WhatsApp Image 2023-02-26 at 17 08 27](https://user-images.githubusercontent.com/62904371/221422808-fd70672c-8b20-4b88-b762-7ee2e56f787d.jpeg)
+![WhatsApp Image 2023-02-26 at 17 08 27 (1)](https://user-images.githubusercontent.com/62904371/221422811-b18270bd-8806-4f64-9eaa-95ad7d189461.jpeg)
+![WhatsApp Image 2023-02-26 at 17 08 28](https://user-images.githubusercontent.com/62904371/221422814-c58d669d-4c9a-4116-93c5-c54c5287ab99.jpeg)
+![WhatsApp Image 2023-02-26 at 17 08 28 (1)](https://user-images.githubusercontent.com/62904371/221422818-877d40b0-09c5-430c-a7c5-d22353d98651.jpeg)
 
