@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^2.7.0
   cloud_firestore: ^4.1.0
   flutter_svg: ^1.1.6
+  provider:
 
 
 dev_dependencies:

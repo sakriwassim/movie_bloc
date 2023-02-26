@@ -132,7 +132,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SafeArea(
           child: SingleChildScrollView(
@@ -145,11 +144,10 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 Container(
                   decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      )),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  )),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 30,
@@ -351,23 +349,19 @@ class _AuthPageState extends State<AuthPage> {
                           onTap: (() => setState(() {
                                 isLogin = !isLogin;
                               })),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                    style: const TextStyle(color: Colors.grey),
-                                    text: isLogin
-                                        ? "New user? "
-                                        : "You have an account? "),
-                                TextSpan(
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        color: MyColors.myGrey,
-                                        fontWeight: FontWeight.bold,
-                                        decoration: TextDecoration.underline),
-                                    text: isLogin ? "Sign up" : "Login")
-                              ],
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(isLogin
+                                  ? "New user? "
+                                  : "You have an account? "),
+                              Text(
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline),
+                                  isLogin ? "Sign up" : "Login")
+                            ],
                           ),
                         ),
                         const SizedBox(

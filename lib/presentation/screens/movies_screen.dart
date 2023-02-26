@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:provider/provider.dart';
 
 import '../../authentification/controllers/auth_controller.dart';
 import '../../business_logic/cubit/movies_cubit.dart';
@@ -19,7 +20,10 @@ class _MoviesScreenState extends State<MoviesScreen> {
   List<Movie> allMovies = [];
   bool _isSearching = false;
   bool isDescending = false;
-  
+  bool _iconBool = false;
+
+  IconData _logout = Icons.logout;
+
   @override
   void initState() {
     BlocProvider.of<MoviesCubit>(context).GetAllMovies();
@@ -52,7 +56,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
   Widget _buildAppBarTitle() {
     return Text(
       'Movie App',
-      style: TextStyle(color: MyColors.myGrey),
     );
   }
 
@@ -86,17 +89,15 @@ class _MoviesScreenState extends State<MoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.myGrey,
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () {
               Auth().signOut();
             },
-            icon: Icon(color: Colors.white, Icons.logout),
+            icon: Icon(_logout),
           )
         ],
-        backgroundColor: MyColors.myYellow,
         title: _buildAppBarTitle(),
       ),
       body: OfflineBuilder(

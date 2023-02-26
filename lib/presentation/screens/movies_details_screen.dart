@@ -16,7 +16,6 @@ class MoviesDetailsScreen extends StatelessWidget {
       expandedHeight: 600,
       pinned: true,
       stretch: true,
-      backgroundColor: MyColors.myGrey,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
@@ -38,28 +37,22 @@ class MoviesDetailsScreen extends StatelessWidget {
   }
 
   Widget movieInfo(String title, String value) {
-    return RichText(
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: title,
-            style: TextStyle(
-              color: MyColors.myWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+    return Row(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
-          TextSpan(
-            text: value,
-            style: TextStyle(
-              color: MyColors.myWhite,
-              fontSize: 16,
-            ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -70,32 +63,6 @@ class MoviesDetailsScreen extends StatelessWidget {
       color: MyColors.myYellow,
       thickness: 2,
     );
-  }
-
-  Widget displayRandomQuoteOrEmptySpace(state) {
-    var quotes = (state).quotes;
-    if (quotes.length != 0) {
-      int randomQuoteIndex = Random().nextInt(quotes.length - 1);
-      return Center(
-        child: DefaultTextStyle(
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: MyColors.myWhite,
-            shadows: [
-              Shadow(
-                blurRadius: 7,
-                color: MyColors.myYellow,
-                offset: Offset(0, 0),
-              )
-            ],
-          ),
-          child: Container(),
-        ),
-      );
-    } else {
-      return Container();
-    }
   }
 
   Widget showProgressIndicator() {
@@ -109,7 +76,6 @@ class MoviesDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.myGrey,
       body: CustomScrollView(
         slivers: [
           buildSliverAppBar(),
@@ -126,12 +92,13 @@ class MoviesDetailsScreen extends StatelessWidget {
                       movieInfo('Title : ', movie?.title ?? ""),
                       buildDivider(310),
                       movieInfo('Year : ', movie?.year ?? ""),
-                      buildDivider(260),
+                      buildDivider(310),
                       movieInfo('Actors : ', movie?.actors ?? ""),
-                      buildDivider(260),
+                      buildDivider(300),
                       movieInfo('Director : ', movie?.director ?? ""),
-                      buildDivider(260),
+                      buildDivider(290),
                       movieInfo('Writer : ', movie?.writer ?? ""),
+                      buildDivider(290),
                       SizedBox(
                         height: 50,
                       ),

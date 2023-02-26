@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/presentation/screens/movies_screen.dart';
 
-import 'authentification/pages/entry_view.dart';
+import 'authentification/pages/SplashScreen_view.dart';
 import 'business_logic/cubit/movies_cubit.dart';
 import 'constants/strings.dart';
 import 'data/models/movies.dart';
