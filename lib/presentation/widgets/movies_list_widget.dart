@@ -8,7 +8,9 @@ class MoviesListwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    allMovies?.sort((a, b) => a.metascore!.compareTo(b.metascore!));
+    var movie = allMovies!
+      ..sort((a, b) => a.metascore!.compareTo(b.metascore!));
+    var Movies15 = movie.sublist(0, 15);
     return GridView.builder(
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -16,7 +18,7 @@ class MoviesListwidget extends StatelessWidget {
             childAspectRatio: 1 / 2,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),
-        itemCount: allMovies?.length,
+        itemCount: Movies15.length,
         itemBuilder: (BuildContext ctx, index) {
           return Container(
               alignment: Alignment.center,
