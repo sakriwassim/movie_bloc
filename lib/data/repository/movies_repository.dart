@@ -8,7 +8,7 @@ class MoviesRepository {
   Future<List<Movie>> getAllMovies() async {
     final movies = await moviesWebServices.getAllMovies();
     List<Movie> listofmovies =
-        movies.map((movies) => Movie.fromJson(movies)).toList();
+        movies.map((movies) => Movie.fromJson(movies)).toList().sublist(0, 15);
     return listofmovies;
   }
 }
